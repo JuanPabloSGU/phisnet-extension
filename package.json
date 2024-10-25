@@ -1,0 +1,16 @@
+{
+  "name": "phishnet-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "^0.0.277",
+    "typescript": "^5.6.3"
+  }
+}
