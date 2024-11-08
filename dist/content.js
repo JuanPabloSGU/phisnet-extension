@@ -1,2 +1,1 @@
-"use strict";
-console.log('Content script loaded');
+(()=>{"use strict";console.log("Content script loaded")})();

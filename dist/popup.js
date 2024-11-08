@@ -1,7 +1,1 @@
-"use strict";
-document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('myButton');
-    button?.addEventListener('click', () => {
-        console.log('Popup button clicked');
-    });
-});
+(()=>{"use strict";document.addEventListener("DOMContentLoaded",(()=>{const t=document.getElementById("myButton");t?.addEventListener("click",(()=>{console.log("Popup button clicked")}))}))})();

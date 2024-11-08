@@ -1,4 +1,1 @@
-"use strict";
-chrome.runtime.onInstalled.addListener(() => {
-    console.log('Extension installed');
-});
+(()=>{"use strict";chrome.runtime.onInstalled.addListener((()=>{console.log("Extension installed")}))})();
