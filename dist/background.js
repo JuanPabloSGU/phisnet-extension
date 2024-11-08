@@ -1,1 +1,1 @@
-(()=>{"use strict";chrome.runtime.onInstalled.addListener((()=>{console.log("Extension installed")}))})();
+(()=>{"use strict";chrome.runtime.onInstalled.addListener((()=>{fetch("http://localhost:5000/api/v1/hello_world").then((e=>e.json())).then((e=>{console.log("Data from server:",e)})).catch((e=>{console.error("Error fetching data:",e)}))}))})();
