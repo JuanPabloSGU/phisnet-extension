@@ -78,11 +78,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                         .then(response => response.json())
                         .then(data => {
-                            console.log('Token data:', data);
                             if (data.access_token) {
-                                chrome.runtime.sendMessage({ token: data.access_token });
-                                chrome.runtime.sendMessage({ jwt: data.id_token });
-                                window.location.href = 'home.html';
+
+                                chrome.storage.local.set({
+                                    jwt: data.id_token,
+                                    token: data.access_token
+                                }, () => {
+                                    if (chrome.runtime.lastError) {
+                                        console.error(chrome.runtime.lastError.message);
+                                    } else {
+                                        chrome.storage.local.get(['jwt', 'token'], (result) => {
+                                            if (chrome.runtime.lastError) {
+                                                console.error('Error retrieving data:', chrome.runtime.lastError.message);
+                                            } else {
+                                                console.log('Data retrieved:', result);
+                                            }
+                                        });
+                                        console.log('JWT and token saved');
+                                        chrome.runtime.sendMessage({ token: data.access_token });
+                                        chrome.runtime.sendMessage({ jwt: data.id_token });
+                                        chrome.action.setPopup({ popup: 'home.html' });
+                                        window.location.href = 'home.html';
+                                    }
+                                })
                             }
                         })
                         .catch(error => {
@@ -95,3 +113,4 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 });
+

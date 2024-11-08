@@ -28,11 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('Error fetching user info:', error);
                     userInfoDiv.innerHTML = '<p>Error fetching user info</p>';
                 });
-        } else {
-            console.error('Access token is empty');
-            userInfoDiv.innerHTML = '<p>Access token is empty</p>';
         }
-
     });
 
     phishingForm.addEventListener('submit', (event) => {
@@ -83,16 +79,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    chrome.runtime.sendMessage({ action: 'getLinks' }, (response) => {
+        const links = response.links;
+        if (links) {
+            list_of_urls = links;
+            list_of_urls.forEach((item) => {
+                const url = item.url;
+                const score = item.score;
+                const phishingItem = document.createElement('div');
+                phishingItem.innerHTML = `
+                    <p><strong>URL:</strong> ${url}</p>
+                    <p><strong>Score:</strong> ${score}</p>
+                `;
+                phishingList.appendChild(phishingItem);
+            });
+        } else {
+            console.error('Links are empty');
+        }
+    });
 
     logout.addEventListener('click', () => {
         chrome.runtime.sendMessage({ action: 'clearToken' }, (response) => {
             const message = response.message;
             if (message) {
-                console.log(message);
+                chrome.storage.local.clear().then(() => {
+                    console.log('Token cleared:', message);
+                    chrome.action.setPopup({ popup: 'popup.html' });
+                    window.location.href = 'popup.html';
+                });
             } else {
                 console.error('Error clearing token');
             }
         });
-        window.location.href = 'popup.html';
     });
 });
