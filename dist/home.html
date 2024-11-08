@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home</title>
+        <script src="home.js" defer></script>
+    </head>
+    <body>
+        <h1>User Information</h1>
+        <div id="user-info"></div>
+        <button id="logout">Logout</button>
+
+        <div>
+            <p>
+                <a href="settings.html" target="_blank">Settings</a>
+            </p>
+        </div>
+
+        <h1>Submit a Phishing Website</h1>
+        <form id="phishing-form">
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <h1>Phishing Website Results</h1>
+        <div id="phishing-list"></div>
+    </body>
+</html>
