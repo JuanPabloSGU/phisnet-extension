@@ -1,5 +1,7 @@
 let access_token: string | null = null;
 let jwt: string | null = null;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let links: any[] = [];
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -51,6 +53,7 @@ function toggleAutomaticSearch(tab_id: number, toggle: boolean) {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function sendNotification(links: any[]) {
     for (let i = 0; i < links.length; i++) {
         const link = links[i];

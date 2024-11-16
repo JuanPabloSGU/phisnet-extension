@@ -13,7 +13,7 @@ chrome.storage.local.get(['automatic_search'], (result) => {
                 if (jwt) {
                     const a_tags = document.getElementsByTagName('a');
 
-                    let possible_links = new Set<Link>();
+                    const possible_links = new Set<Link>();
 
                     for (let i = 0; i < a_tags.length; i++) {
                         possible_links.add({
@@ -22,7 +22,7 @@ chrome.storage.local.get(['automatic_search'], (result) => {
                         });
                     }
 
-                    let fetchLinksPromises = Array.from(possible_links).map(link => {
+                    const fetchLinksPromises = Array.from(possible_links).map(link => {
                         return fetch('http://localhost:5000/api/v1/llm_mock', {
                             method: 'POST',
                             headers: {

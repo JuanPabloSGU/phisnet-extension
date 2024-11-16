@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let list_of_urls = [] as any[];
 
 document.addEventListener('DOMContentLoaded', () => {
