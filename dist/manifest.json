@@ -11,6 +11,7 @@
   },
   "permissions": [
       "storage",
+      "notifications",
       "scripting",
       "identity",
       "tabs"
@@ -27,7 +28,7 @@
     }
   ],
   "web_accessible_resources": [{
-      "resources": ["home.html", "settings.html"],
+      "resources": ["home.html", "settings.html", "notification.png"],
       "matches": ["<all_urls>"]
   }],
   "oauth2": {
