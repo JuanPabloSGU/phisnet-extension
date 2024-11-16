@@ -27,7 +27,7 @@
     }
   ],
   "web_accessible_resources": [{
-      "resources": ["home.html"],
+      "resources": ["home.html", "settings.html"],
       "matches": ["<all_urls>"]
   }],
   "oauth2": {
