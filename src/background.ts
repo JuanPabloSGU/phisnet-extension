@@ -51,6 +51,23 @@ function toggleAutomaticSearch(tab_id: number, toggle: boolean) {
     }
 }
 
+function sendNotification(links: any[]) {
+    for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        const percentage = parseFloat(link.score.replace('%', ''));
+
+        if (percentage > 75.0) {
+            chrome.notifications.create(`phishing_link_${i}`, {
+                type: 'basic',
+                iconUrl: 'images/notification.png',
+                title: 'Phishing Link Found',
+                message: `URL: ${link.url}\nScore: ${link.score}`,
+                priority: 2
+            });
+        }
+    }
+}
+
 chrome.tabs.onUpdated.addListener((tab_id, change_info, tab) => {
     // Skips urls like "chrome://" to avoid extension error
     if (tab.url?.startsWith("chrome://")) return undefined;
@@ -96,6 +113,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             sendResponse({ message: 'Token cleared' });
             break;
         case "getLinks":
+            sendNotification(links);
             sendResponse({ links: links });
             break;
     }
