@@ -4,6 +4,12 @@ let links: any[] = [];
 
 chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.local.clear();
+    chrome.storage.local.set({ automatic_search: false }, () => {
+        if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError.message);
+        }
+        console.log('Automatic Search is disabled');
+    });
     chrome.action.setPopup({ popup: 'popup.html' });
     chrome.action.openPopup();
 });
@@ -34,6 +40,32 @@ function checkTokenAndSetPopup() {
     });
 }
 
+function toggleAutomaticSearch(tab_id: number, toggle: boolean) {
+    if (toggle) {
+        chrome.scripting.executeScript({
+            target: { tabId: tab_id },
+            files: ['content.js']
+        });
+    } else {
+        console.log('Automatic search disabled', tab_id);
+    }
+}
+
+chrome.tabs.onUpdated.addListener((tab_id, change_info, tab) => {
+    // Skips urls like "chrome://" to avoid extension error
+    if (tab.url?.startsWith("chrome://")) return undefined;
+
+    if (tab.active && change_info.status === 'complete') {
+        chrome.storage.local.get(['automatic_search'], (result) => {
+            if (chrome.runtime.lastError) {
+                // console.error(chrome.runtime.lastError.message);
+            } else {
+                const automatic_search = result.automatic_search;
+                toggleAutomaticSearch(tab_id, automatic_search);
+            }
+        });
+    }
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 

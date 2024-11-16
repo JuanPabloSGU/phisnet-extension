@@ -1,6 +1,19 @@
 let list_of_urls = [] as any[];
 
 document.addEventListener('DOMContentLoaded', () => {
+    chrome.storage.local.get(['jwt', 'token'], (result) => {
+        if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError.message);
+        } else {
+            const jwt = result.jwt;
+            const token = result.token;
+            if (!jwt || !token) {
+                window.location.href = 'popup.html';
+            }
+        }
+    });
+
+
     const userInfoDiv = document.getElementById('user-info') as HTMLDivElement;
     const logout = document.getElementById('logout') as HTMLButtonElement;
     const phishingForm = document.getElementById('phishing-form') as HTMLFormElement;
