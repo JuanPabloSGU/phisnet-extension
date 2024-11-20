@@ -8,6 +8,8 @@ export default [
             "webpack.config.js",
             "**/dist/*",
             "**/node_modules/*",
+            "**/test/*",
+            "jest.config.js"
         ]
     },
     {
